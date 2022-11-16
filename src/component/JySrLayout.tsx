@@ -1,18 +1,16 @@
-import React from "react";
-import Box from '@mui/material/Box'
+import React, {useState} from "react";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import {blue, blueGrey, common, green, lightBlue} from "@mui/material/colors";
-import CssBaseline from "@mui/material/CssBaseline";
-import {AppBar} from "@mui/material";
+import {AppBar, Grid} from "@mui/material";
 import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import ClusterList from "./ClusterList";
-import Toolbar from "@mui/material/Toolbar";
+
+import TopFullWidthMenu from "./TopFullWidthMenu";
+import SchemaSearch from "./left/SchemaSearch";
+import SchemaContent from "./right/SchemaContent";
 
 export default function JySrLayout() {
+
+    const [clusterIdx , setClusterIdx] = useState(-1)
 
     let mdTheme = createTheme({
         palette: {
@@ -27,36 +25,21 @@ export default function JySrLayout() {
 
     return (
         <ThemeProvider theme={mdTheme}>
-            <Box sx={{ display: 'flex', }}>
-                <CssBaseline/>
-                <AppBar position="static" >
-                    <Container maxWidth="xl">
-                        <Toolbar disableGutters>
-                            <Typography
-                                component="h1"
-                                variant="h6"
-                                noWrap
-                                color="inherit"
-                                sx={{
-                                    marginRight: '36px'
-                                }}
-                            >
-                                JY-SR
-                            </Typography>
-                            <ClusterList/>
-                        </Toolbar>
-                    </Container>
-                </AppBar>
-            </Box>
-            <Box sx={{width: 300,
-                height: 300,
-                backgroundColor: 'primary.dark',
-                '&:hover': {
-                    backgroundColor: 'primary.main',
-                    opacity: [0.9, 0.8, 0.7],
-                },}}>
-                left
-            </Box>
+            <TopFullWidthMenu/>
+
+            <Container maxWidth="xl">
+                <Grid container maxWidth="xl" spacing={1}>
+                    <Grid item sm={12} xs={12} md={4}>
+                        <SchemaSearch/>
+                    </Grid>
+                    <Grid item sm={12} xs={12} md={8}>
+                        <SchemaContent/>
+                    </Grid>
+                    <Grid item sm={12} xs={12} md={12}>
+                        bottom
+                    </Grid>
+                </Grid>
+            </Container>
         </ThemeProvider>
     )
 }
